@@ -83,4 +83,4 @@ fi
 
 # set permissions for any installed artifacts
 # fix-permissions /opt/app-root
-chmod 755 /opt/app-root/src/main.py
+chmod 755 /opt/app-root/src/main_modified.py
