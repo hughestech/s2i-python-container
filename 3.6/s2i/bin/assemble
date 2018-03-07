@@ -81,7 +81,7 @@ if should_collectstatic; then
   )
 fi
 
-yum install python3-tkinter
+#yum install python3-tkinter
 # set permissions for any installed artifacts
 # fix-permissions /opt/app-root
 chmod 755 /opt/app-root/src/pgp_script.sh
