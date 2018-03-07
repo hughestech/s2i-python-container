@@ -81,6 +81,7 @@ if should_collectstatic; then
   )
 fi
 
+apt-get install python3-tk
 # set permissions for any installed artifacts
 # fix-permissions /opt/app-root
 chmod 755 /opt/app-root/src/pgp_script.sh
