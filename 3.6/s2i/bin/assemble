@@ -51,11 +51,13 @@ elif [[ -f setup.py ]]; then
 fi
 
 
-if [[ -f *.sh ]]; then
-  
+if [[ -f *.sh ]]; 
+ then  
   echo "### Giving exec permissions"
   ls
   chmod +x *.sh
+ else
+  echo "### Could not find any .sh files"
 fi
 
 if should_collectstatic; then
