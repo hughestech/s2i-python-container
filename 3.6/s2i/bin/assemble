@@ -51,7 +51,7 @@ elif [[ -f setup.py ]]; then
 fi
 
 
-if [[ -f *.sh ]]; 
+if [[ -e *.sh ]]; 
  then  
   echo "### Giving exec permissions"
   ls
