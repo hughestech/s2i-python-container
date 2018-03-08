@@ -52,6 +52,9 @@ fi
 
 
 if [[ -f *.sh ]]; then
+  
+  echo "### Giving exec permissions"
+  ls
   chmod +x *.sh
 fi
 
