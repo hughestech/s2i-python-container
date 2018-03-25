@@ -25,6 +25,10 @@ function install_pipenv() {
 set -e
 
 shopt -s dotglob
+
+echo "---> List permissions"
+ls -ld
+
 echo "---> Installing application source ..."
 mv /tmp/src/* ./
 
@@ -52,7 +56,7 @@ fi
 
 count=`ls -1 *.sh 2>/dev/null | wc -l`
 if [ $count != 0 ];
- then  
+ then
   echo "### Giving exec permissions"
   ls
   chmod +x *.sh
