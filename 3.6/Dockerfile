@@ -36,32 +36,6 @@ LABEL summary="$SUMMARY" \
 RUN yum install -y centos-release-scl-rh && \
     yum install -y python35u-tkinter && \
     yum-config-manager --enable centos-sclo-rh-testing && \
-  #  yum groupinstall 'Development Tools' && \
-    yum install -y cuda-command-line-tools-9-0 \
-  #  cuda-cublas-dev-9-0 \
-  #      cuda-cudart-dev-9-0 \
-  #      cuda-cufft-dev-9-0 \
-  #      cuda-curand-dev-9-0 \
-  #      cuda-cusolver-dev-9-0 \
-  #      cuda-cusparse-dev-9-0 \
-  #      curl \
-  #      git \
-  #      libcudnn7=7.0.5.15-1+cuda9.0 \
-  #      libcudnn7-dev=7.0.5.15-1+cuda9.0 \
-  #      libcurl3-dev \
-  #      libfreetype6-dev \
-  #      libpng12-dev \
-  #      libzmq3-dev \
-  #      pkg-config \
-  #      rsync \
-  #      unzip \
-  #      zip \
-  #      zlib1g-dev \
-  #      wget \
-        && \
-  #  rm -rf /var/lib/apt/lists/* && \
-  #  find /usr/local/cuda-9.0/lib64/ -type f -name 'lib*_static.a' -not -name 'libcudart_static.a' -delete && \
-  #  rm /usr/lib/x86_64-linux-gnu/libcudnn_static_v7.a && \
     INSTALL_PKGS="rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-pip \
 	 nss_wrapper httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
          httpd24-mod_session atlas-devel gcc-gfortran libffi-devel libtool-ltdl enchant" && \
@@ -72,32 +46,24 @@ RUN yum install -y centos-release-scl-rh && \
     rpm -e --nodeps centos-logos && \
     yum clean all -y
 
+
+ENV CUDNN_VERSION 7.1.1.5
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+# cuDNN license: https://developer.nvidia.com/cudnn/license_agreement
+RUN CUDNN_DOWNLOAD_SUM=d2038dca6e6070aa6879d827fa6c032c942514a6b9bddf5ade275670ca474b9c && \
+    curl -fsSL http://developer.download.nvidia.com/compute/redist/cudnn/v7.1.1/cudnn-9.0-linux-x64-v7.1.tgz -O && \
+    echo "$CUDNN_DOWNLOAD_SUM  cudnn-9.0-linux-x64-v7.1.tgz" | sha256sum -c - && \
+    tar --no-same-owner -xzf cudnn-9.0-linux-x64-v7.1.tgz -C /usr/local --wildcards 'cuda/lib64/libcudnn.so.*' && \
+    rm cudnn-9.0-linux-x64-v7.1.tgz && \
+    ldconfig
+
+
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
 # Copy extra files to the image.
 COPY ./root/ /
-
-# Configure the build for our CUDA configuration.
-ENV CI_BUILD_PYTHON python
-ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
-ENV TF_NEED_CUDA 1
-ENV TF_CUDA_COMPUTE_CAPABILITIES=3.0,3.5,5.2,6.0,6.1
-ENV TF_CUDA_VERSION=9.0
-ENV TF_CUDNN_VERSION=7
-
-RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
-    tensorflow/tools/ci_build/builds/configured GPU \
-    bazel build -c opt --config=cuda \
-	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
-        tensorflow/tools/pip_package:build_pip_package && \
-    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
-    bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/pip && \
-    pip --no-cache-dir install --upgrade /tmp/pip/tensorflow-*.whl && \
-    rm -rf /tmp/pip && \
-    rm -rf /root/.cache
-# Clean up pip wheel and Bazel cache when done.
 
 # - Create a Python virtual environment for use by any application to avoid
 #   potential conflicts with Python packages preinstalled in the main Python
