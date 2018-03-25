@@ -44,20 +44,6 @@ RUN yum install -y centos-release-scl-rh && \
         cuda-curand-dev-9-0 \
         cuda-cusolver-dev-9-0 \
         cuda-cusparse-dev-9-0 \
-        curl \
-        git \
-        libcudnn7=7.0.5.15-1+cuda9.0 \
-        libcudnn7-dev=7.0.5.15-1+cuda9.0 \
-        libcurl3-dev \
-        libfreetype6-dev \
-        libpng12-dev \
-        libzmq3-dev \
-        pkg-config \
-        rsync \
-        unzip \
-        zip \
-        zlib1g-dev \
-        wget \
         && \
     INSTALL_PKGS="rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-pip \
 	 nss_wrapper httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
