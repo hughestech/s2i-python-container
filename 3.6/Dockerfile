@@ -38,7 +38,7 @@ RUN yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
   #  yum groupinstall 'Development Tools' && \
     yum install -y cuda-command-line-tools-9-0 \
-    cuda-cublas-dev-9-0 \
+  #  cuda-cublas-dev-9-0 \
   #      cuda-cudart-dev-9-0 \
   #      cuda-cufft-dev-9-0 \
   #      cuda-curand-dev-9-0 \
