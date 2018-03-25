@@ -36,32 +36,32 @@ LABEL summary="$SUMMARY" \
 RUN yum install -y centos-release-scl-rh && \
     yum install -y python35u-tkinter && \
     yum-config-manager --enable centos-sclo-rh-testing && \
-    yum groupinstall 'Development Tools' && \
+  #  yum groupinstall 'Development Tools' && \
     yum install -y cuda-command-line-tools-9-0 && \
     cuda-cublas-dev-9-0 \
-        cuda-cudart-dev-9-0 \
-        cuda-cufft-dev-9-0 \
-        cuda-curand-dev-9-0 \
-        cuda-cusolver-dev-9-0 \
-        cuda-cusparse-dev-9-0 \
-        curl \
-        git \
-        libcudnn7=7.0.5.15-1+cuda9.0 \
-        libcudnn7-dev=7.0.5.15-1+cuda9.0 \
-        libcurl3-dev \
-        libfreetype6-dev \
-        libpng12-dev \
-        libzmq3-dev \
-        pkg-config \
-        rsync \
-        unzip \
-        zip \
-        zlib1g-dev \
-        wget \
+  #      cuda-cudart-dev-9-0 \
+  #      cuda-cufft-dev-9-0 \
+  #      cuda-curand-dev-9-0 \
+  #      cuda-cusolver-dev-9-0 \
+  #      cuda-cusparse-dev-9-0 \
+  #      curl \
+  #      git \
+  #      libcudnn7=7.0.5.15-1+cuda9.0 \
+  #      libcudnn7-dev=7.0.5.15-1+cuda9.0 \
+  #      libcurl3-dev \
+  #      libfreetype6-dev \
+  #      libpng12-dev \
+  #      libzmq3-dev \
+  #      pkg-config \
+  #      rsync \
+  #      unzip \
+  #      zip \
+  #      zlib1g-dev \
+  #      wget \
         && \
-    rm -rf /var/lib/apt/lists/* && \
-    find /usr/local/cuda-9.0/lib64/ -type f -name 'lib*_static.a' -not -name 'libcudart_static.a' -delete && \
-    rm /usr/lib/x86_64-linux-gnu/libcudnn_static_v7.a && \
+  #  rm -rf /var/lib/apt/lists/* && \
+  #  find /usr/local/cuda-9.0/lib64/ -type f -name 'lib*_static.a' -not -name 'libcudart_static.a' -delete && \
+  #  rm /usr/lib/x86_64-linux-gnu/libcudnn_static_v7.a && \
     INSTALL_PKGS="rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-pip \
 	 nss_wrapper httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
          httpd24-mod_session atlas-devel gcc-gfortran libffi-devel libtool-ltdl enchant" && \
